@@ -17,6 +17,25 @@ def checksum(spreed_sheet):
     return check_sum
 
 
+def sum_of_divisible(spreed_sheet):
+    check_sum = 0
+    for row in spreed_sheet.split('\n'):
+        numbers = row.split('\t')
+        check_sum += _check_sum_of_division(numbers)
+    return check_sum
+
+
+def _check_sum_of_division(numbers):
+    for i in range(len(numbers)):
+        dividend = int(numbers[i])
+        for j in range(len(numbers)):
+            if i != j:
+                divisor = int(numbers[j])
+                if dividend % divisor == 0:
+                    return dividend / divisor
+    return 0
+
+
 class CheckSumTest(unittest.TestCase):
     def testCheckSumOfOnes(self):
         self.assertEqual(0, checksum('1\t1\t1\n1\t1\t1\t1\n1\t1\t1'))
@@ -48,25 +67,6 @@ class CheckSumTest(unittest.TestCase):
 2432\t4030\t3397\t4032\t3952\t2727\t157\t3284\t3450\t3229\t4169\t3471\t4255\t155\t127\t186
 919\t615\t335\t816\t138\t97\t881\t790\t855\t89\t451\t789\t423\t108\t95\t116"""
         print(checksum(test_input))
-
-
-def sum_of_divisible(spreed_sheet):
-    check_sum = 0
-    for row in spreed_sheet.split('\n'):
-        numbers = row.split('\t')
-        check_sum += _check_sum_of_division(numbers)
-    return check_sum
-
-
-def _check_sum_of_division(numbers):
-    for i in range(len(numbers)):
-        dividend = int(numbers[i])
-        for j in range(len(numbers)):
-            if i != j:
-                divisor = int(numbers[j])
-                if dividend % divisor == 0:
-                    return dividend / divisor
-    return 0
 
 
 class SumOfEvenlyDivisibleValuesTest(unittest.TestCase):
