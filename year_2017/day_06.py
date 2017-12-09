@@ -2,6 +2,16 @@ import unittest
 
 
 def number_of_redistribution(banks):
+    history, _ = redistribution_history(banks)
+    return len(history)
+
+
+def number_of_cycles(banks):
+    _, last_repetition = redistribution_history(banks)
+    return number_of_redistribution(last_repetition)
+
+
+def redistribution_history(banks):
     history = set()
     size = len(banks)
     _copy = list(banks)
@@ -12,8 +22,7 @@ def number_of_redistribution(banks):
         for i in range(value):
             j = (i + index + 1) % size
             _copy[j] += 1
-
-    return len(history)
+    return history, _copy
 
 
 def most_blocks_bank(banks):
@@ -26,7 +35,7 @@ def most_blocks_bank(banks):
     return max_index, max_value
 
 
-PUZZLE_INPUT = [4, 1, 15, 12, 0, 9, 9, 5, 5, 8, 7, 3, 14, 5, 12, 34, 1, 15, 12, 0, 9, 9, 5, 5, 8, 7, 3, 14, 5, 12, 3]
+PUZZLE_INPUT = [4, 1, 15, 12, 0, 9, 9, 5, 5, 8, 7, 3, 14, 5, 12, 3]
 
 
 class MemoryBankRedistributionTest(unittest.TestCase):
@@ -41,3 +50,4 @@ class MemoryBankRedistributionTest(unittest.TestCase):
 
     def testPrintSolution(self):
         print(number_of_redistribution(PUZZLE_INPUT))
+        print(number_of_cycles(PUZZLE_INPUT))
